@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"crypto/rand"
+	"fmt"
 	"log/slog"
 	"time"
 
@@ -25,7 +26,7 @@ func RandomBatches(ctx context.Context, pool bapl.BatchPool, batchSize int, batc
 				if err != nil {
 					log.ErrorContext(ctx, "error pushing batch", "err", err)
 				}
-				log.DebugContext(ctx, "pushed batch")
+				log.DebugContext(ctx, "pushed batch", "hash", fmt.Sprintf("%X", batch.Hash()))
 			}()
 
 		case <-ctx.Done():

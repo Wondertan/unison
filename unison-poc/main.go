@@ -179,9 +179,10 @@ func run(ctx context.Context) error {
 	}
 
 	rpc := jsonrpc.NewServer()
-	rpc.Register("beatches", pool)
+	rpc.Register("batches", pool)
 	go func() {
-		err := http.ListenAndServe(":8080", rpc)
+		fmt.Println("Starting the RPC server")
+		err := http.ListenAndServe(":8888", rpc)
 		if err != nil {
 			fmt.Println("The RPC server err", err)
 		}
