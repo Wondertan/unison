@@ -9,11 +9,13 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
+	"github.com/filecoin-project/go-jsonrpc"
 	"github.com/iykyk-syn/unison/bapl"
 	"github.com/iykyk-syn/unison/crypto"
 	"github.com/iykyk-syn/unison/crypto/ed25519"
@@ -175,6 +177,16 @@ func run(ctx context.Context) error {
 			return ctx.Err()
 		}
 	}
+
+	rpc := jsonrpc.NewServer()
+	rpc.Register("beatches", pool)
+	go func() {
+		err := http.ListenAndServe(":8080", rpc)
+		if err != nil {
+			fmt.Println("The RPC server err", err)
+		}
+	}()
+
 	RandomBatches(ctx, mcastPool, batchSize, batchTime)
 	return nil
 }
