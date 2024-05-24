@@ -83,18 +83,18 @@ func (c *Chain) startRound(ctx context.Context) error {
 	for i, cert := range c.lastCerts {
 		parents[i] = cert.Message().ID.Hash()
 
-		var blk block.Block
-		err := blk.UnmarshalBinary(cert.Message().Data)
-		if err != nil {
-			panic(err)
-		}
-
-		for _, batchHash := range blk.Batches() {
-			err := c.batchPool.Delete(ctx, batchHash)
-			if err != nil {
-				c.log.WarnContext(ctx, "can't delete a batch", "err", err)
-			}
-		}
+		// var blk block.Block
+		// err := blk.UnmarshalBinary(cert.Message().Data)
+		// if err != nil {
+		// 	panic(err)
+		// }
+		//
+		// // for _, batchHash := range blk.Batches() {
+		// // 	err := c.batchPool.Delete(ctx, batchHash)
+		// // 	if err != nil {
+		// // 		c.log.WarnContext(ctx, "can't delete a batch", "err", err)
+		// // 	}
+		// // }
 	}
 
 	newBatches, err := c.batchPool.ListBySigner(ctx, c.signerID.Bytes())

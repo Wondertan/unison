@@ -188,6 +188,7 @@ func run(ctx context.Context) error {
 		}
 	}()
 
+	5
 	RandomBatches(ctx, mcastPool, batchSize, batchTime)
 	return nil
 }
