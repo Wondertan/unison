@@ -182,13 +182,12 @@ func run(ctx context.Context) error {
 	rpc.Register("batches", pool)
 	go func() {
 		fmt.Println("Starting the RPC server")
-		err := http.ListenAndServe(":8888", rpc)
+		err := http.ListenAndServe(":8777", rpc)
 		if err != nil {
 			fmt.Println("The RPC server err", err)
 		}
 	}()
 
-	5
 	RandomBatches(ctx, mcastPool, batchSize, batchTime)
 	return nil
 }
