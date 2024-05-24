@@ -36,7 +36,7 @@ func NewMemPool() *MemPool {
 		closeCh:     make(chan struct{}),
 	}
 	pool.batchesCond.L = &pool.batchesMu
-	go pool.gc()
+	// go pool.gc()
 	return pool
 }
 
